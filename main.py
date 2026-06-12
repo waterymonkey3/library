@@ -1,16 +1,20 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from fastapi import FastAPI
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+app = FastAPI(title='测试API', description='整体描述')
 
 
-# Press the green button in the gutter to run the script.
+@app.get('/')
+async def root():
+    return{'message':'hello world'}
+
+
+@app.get(path='/safe', summary='接口安全', description='接口健康监测', tags=['Health'])
+async def safe():
+
+    return {'message':'healthy'}
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    import uvicorn
+    uvicorn.run("main:app")
