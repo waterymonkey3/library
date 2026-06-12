@@ -1,18 +1,15 @@
 from fastapi import FastAPI
+from api.safe import api_safe
 
+app = FastAPI(title='Library API', description='the API of library manage system')
 
-app = FastAPI(title='测试API', description='整体描述')
+app.include_router(api_safe,prefix="/safe",tags=['API Health'])
 
 
 @app.get('/')
 async def root():
     return{'message':'hello world'}
 
-
-@app.get(path='/safe', summary='接口安全', description='接口健康监测', tags=['Health'])
-async def safe():
-
-    return {'message':'healthy'}
 
 
 if __name__ == '__main__':
