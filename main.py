@@ -1,9 +1,18 @@
 from fastapi import FastAPI
 from api.safe import api_safe
+from model import create_tables
+
+
 
 app = FastAPI(title='Library API', description='the API of library manage system')
 
 app.include_router(api_safe,prefix="/safe",tags=['API Health'])
+
+
+
+@app.on_event("startup")
+async def startup_event():
+    await create_tables()
 
 
 
